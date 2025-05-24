@@ -3,10 +3,17 @@ package org.example.service;
 import org.example.modell.Cart;
 import org.example.modell.CartItem;
 import org.example.modell.EBook;
-import java.util.List;
-public class CartService {
-    public Cart cart =new Cart();
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+@Service
+public class CartService {
+    public Cart cart;
+
+    public CartService(@Qualifier("Cart") Cart cart) {
+        this.cart = cart;
+    }
 
     public void addToCart(EBook ebook, int quantity) {
         for (CartItem item : cart.listAll()) {

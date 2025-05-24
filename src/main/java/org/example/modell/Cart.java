@@ -1,8 +1,10 @@
 package org.example.modell;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@Component("Cart")
 public class Cart {
     private final List<CartItem> items = new ArrayList<>();
 

@@ -1,10 +1,11 @@
 package org.example.service;
 
 import org.example.modell.EBook;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class EBookService {
 
     private List<EBook> books = new ArrayList<>(List.of(

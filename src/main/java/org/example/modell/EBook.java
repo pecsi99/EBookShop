@@ -2,9 +2,10 @@ package org.example.modell;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
-
+//@Component("EBook")
 @Setter
 @Getter
 public class EBook {
