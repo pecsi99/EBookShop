@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Kosár</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.3.1/dist/solar/bootstrap.min.css">
+  <style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #aaa;
+        padding: 8px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    h1 {
+        text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Kosár tartalma</h1>
+
+<div th:if="${cartItems.empty}">
+  <p>A kosár üres.</p>
+</div>
+
+<div th:unless="${cartItems.empty}">
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Cím</th>
+      <th>Szerző</th>
+      <th>Oldalak</th>
+      <th>Ár (Ft)</th>
+      <th>Mennyiség</th>
+      <th>Műfaj</th>
+      <th>Műveletek</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${cartItems}">
+      <td th:text="${item.ebook.id}">1</td>
+      <td th:text="${item.ebook.title}">Cím</td>
+      <td th:text="${item.ebook.author}">Szerző</td>
+      <td th:text="${item.ebook.pages}">123</td>
+      <td th:text="${item.ebook.price}">1999</td>
+      <td th:text="${item.quantity}">2</td>
+      <td th:text="${item.ebook.genre}">Fantasy</td>
+      <td>
+        <a th:href="@{/cart/delete/{id}(id=${item.ebook.id})}" class="btn btn-danger btn-sm"
+           onclick="return confirm('Biztosan törlöd ezt a könyvet a kosárból?');">Törlés</a>
+      </td>
+
+    </tr>
+    </tbody>
+  </table>
+  <div th:unless="${cartItems.empty}">
+    <table> ... </table>
+
+    <form th:action="@{/cart/summary}" method="get">
+    <button type="submit">Összegzés</button>
+    </form>
+
+    <div th:if="${grossTotal != null}">
+      <p>Fizetendő összeg (bruttó, 27% ÁFA): <span th:text="${grossTotal + ' Ft'}"></span></p>
+    </div>
+
+
+
+  </div>
+  <a class="btn btn-primary btn-lg" th:href="@{/products/list}" role="button">Vissza a termékekhez</a>
+</div>
+
+</body>
+</html>

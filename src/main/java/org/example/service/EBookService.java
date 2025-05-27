@@ -28,14 +28,23 @@ public class EBookService {
 //        books.add(book);
 //        nextId++;
 //    }
-    public void addEbook(String title, String author, int price, int pages, String genre) {
-        int newId = books.stream()
-                .map(EBook::getId)
-                .max(Integer::compareTo)
-                .orElse(0) + 1;
+//    public void addEbook(String title, String author, int price, int pages, String genre) {
+//        int newId = books.stream()
+//                .map(EBook::getId)
+//                .max(Integer::compareTo)
+//                .orElse(0) + 1;
+//
+//        books.add(new EBook(newId, title, author, price, pages, genre));
+//    }
+public void addEbook(String title, String author, int price, int pages, String genre) {
+    int newId = books.stream()
+            .map(EBook::getId)
+            .max(Integer::compareTo)
+            .orElse(0) + 1;
 
-        books.add(new EBook(newId, title, author, price, pages, genre));
-    }
+    // helyesen: pages, price
+    books.add(new EBook(newId, title, author, pages, price, genre));
+}
 
     public boolean removeById(int id) {
         for (int i = 0; i < books.size(); i++) {
@@ -95,6 +104,20 @@ public class EBookService {
         for (int i = 0; i < sorted.size(); i++) {
             for (int j = i + 1; j < sorted.size(); j++) {
                 if (sorted.get(i).getPrice() < sorted.get(j).getPrice()) {
+                    EBook temp = sorted.get(i);
+                    sorted.set(i, sorted.get(j));
+                    sorted.set(j, temp);
+                }
+            }
+        }
+        return sorted;
+    }
+
+    public List<EBook> sortByPageDescending() {
+        List<EBook> sorted = new ArrayList<>(books);
+        for (int i = 0; i < sorted.size(); i++) {
+            for (int j = i + 1; j < sorted.size(); j++) {
+                if (sorted.get(i).getPages() < sorted.get(j).getPages()) {
                     EBook temp = sorted.get(i);
                     sorted.set(i, sorted.get(j));
                     sorted.set(j, temp);
